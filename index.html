@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -21,14 +22,6 @@
 
     <script type="text/babel">
         const { useState, useEffect } = React;
-        
-        // Lucide Icons Mock (Since Lucide React is hard to bundle in a single HTML without build tools)
-        // We use simple SVG placeholders or FontAwesome-like logic for the demo
-        const Icon = ({ name, size = 24, className = "", style = {} }) => {
-            return <span className={`inline-block ${className}`} style={{ width: size, height: size, ...style }}>
-                <i data-lucide={name}></i>
-            </span>;
-        };
 
         const App = () => {
             const [scrolled, setScrolled] = useState(false);
@@ -36,11 +29,12 @@
             useEffect(() => {
                 const handleScroll = () => setScrolled(window.scrollY > 50);
                 window.addEventListener('scroll', handleScroll);
-                // Initialize Lucide icons
+                // สั่งให้ Lucide สร้าง Icon หลังจาก React Render เสร็จ
                 if (window.lucide) window.lucide.createIcons();
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
 
+            // ดึงข้อมูลค่าคงที่จากต้นฉบับ [cite: 4, 5, 6]
             const primaryBlue = "#0099DD";
             const lineLink = "https://lin.ee/EBbRvI6";
             const vbetLink = "https://www.vbetglobal.com/";
@@ -53,54 +47,124 @@
             const reviewImages = [
                 { id: 1, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjv42X502n9MWFo-c83pocvCLzaZ5Mhd8OScgyF_E70Cg-i8HrDD9sweQmPzKwxsMS4xVn9paiG5B1NPhwiYH52Gp5DEEU63ySN-EWedVsClwJ6u5cMYcUhXwO3XcADEyozRM8EZIXXPkfujlIwqa4X_zZGYzsxMeBKs1Rfe1gAPFQrudyEw7yJEH32rPQ/s320/1.jpg', alt: 'รีวิว 1' },
                 { id: 2, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdgEmUGekykOsVGIQsPck4GIPZHQuXux5m_hgI-XRWjsYiZIrvNHy3-p3lU_X-76P1PdLVkE3p_uP2hADoh6OouzvEsfPX7VE_dzqw-o7cAujaoW1sfioVuivWfIfHBFvwsraiXAEkUhMlnQFJWhxVxBvdCh9aJ9CfLw1wfaRQVEU1YmZf8X5h5E0rcOk/s320/2.jpg', alt: 'รีวิว 2' },
-                { id: 3, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyEGxGVeLweJI06H-arzPZTgID-3Kp9g7di6raOikQ6avSP5PSQhA71qgNLnvUeJ73w43xJBrFxZ5POiqjzgJmvXqLv0PONwqT5_csZoLicBm4XxCGMnAV3vHi-bGvAOz7t7s9u8fZtoO381w-VVUwbD_sbuAMl6iTxnHi0EKbzvtrOUlrgqnXIobHfmg/s320/3.jpg', alt: 'รีวิว 3' }
-            ];
+                { id: 3, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyEGxGVeLweJI06H-arzPZTgID-3Kp9g7di6raOikQ6avSP5PSQhA71qgNLnvUeJ73w43xJBrFxZ5POiqjzgJmvXqLv0PONwqT5_csZoLicBm4XxCGMnAV3vHi-bGvAOz7t7s9u8fZtoO381w-VVUwbD_sbuAMl6iTxnHi0EKbzvtrOUlrgqnXIobHfmg/s320/3.jpg', alt: 'รีวิว 3' },
+                { id: 4, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiq46V0kONtyCpNLD7-plwktS4aKaoncWVCmSG9WWJr2NHe06W_-ZmDkSAvXzdximo4fyuH21Q5XNDSm6XhIjmdZZ6AaKik8ceVvmcqCUmncvcBnGYL3RPYf0qkOx9-iGFVA7SkOvej2TA2mvbRWVu3nv81y1Hb7Pxp3lmBqceUp2dOcpNZfh-HAT7gik/s320/4.jpg', alt: 'รีวิว 4' },
+                { id: 5, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvwOu_scQ0tzvfFYZT-I8B8fAuLqyoe28KvTJQNdQS_gTjATNSJGURmP8-Tioh0deiAn5413CMGhQjsJ-ImBImruLH0ahzA4Nw9VVSVydBSGLAopt2KdMeC4rnrpgAKKdmlJeVBIaaOkEaTdP-EJfMU3cY3JxD6NqKXV9UFjH3pvo_Y8GNvDo_3tDzLO0/s320/5.jpg', alt: 'รีวิว 5' }
+            ]; [cite: 6, 7]
 
             return (
-                <div className="min-h-screen bg-white text-slate-800">
-                    {/* Navigation */}
+                <div className="min-h-screen bg-white">
+                    {/* 1. Navigation [cite: 8, 9, 10] */}
                     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'}`}>
                         <div className="container mx-auto px-6 flex justify-between items-center">
-                            <a href={vbetLink} target="_blank"><img src={logoUrl} alt="VT Logo" className="h-8 md:h-10 object-contain" /></a>
+                            <a href={vbetLink} target="_blank"><img src={logoUrl} alt="VT Logo" className="h-10 object-contain" /></a>
                             <div className="hidden md:flex space-x-8 text-sm font-bold">
                                 <a href={productLink} className="hover:text-blue-500">คุณสมบัติ</a>
                                 <a href="#solution" className="hover:text-blue-500">แก้ปัญหา</a>
                                 <a href="#reviews" className="hover:text-blue-500">รีวิว</a>
                             </div>
-                            <a href={lineLink} className="bg-[#0099DD] text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg">ขอใบเสนอราคา</a>
+                            <a href={lineLink} target="_blank" className="bg-[#0099DD] text-white px-5 py-2 rounded-full text-sm font-bold">ขอใบเสนอราคา</a>
                         </div>
                     </nav>
 
-                    {/* Hero Section */}
+                    {/* 2. Hero Section [cite: 11, 12, 13] */}
                     <section className="relative pt-32 pb-20 overflow-hidden">
                         <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-50 rounded-bl-[100px] -z-10 hidden lg:block"></div>
                         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
                             <div className="space-y-8">
-                                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-[#0099DD] text-xs font-bold uppercase">
-                                    Hot Item: VT5000 Series
-                                </div>
-                                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-                                    เปลี่ยนเสียงรบกวน <br />
-                                    <span style={{ color: primaryBlue }}>ให้เป็นความเงียบ</span>
-                                </h1>
-                                <p className="text-lg text-slate-600 max-w-xl">หูฟัง VT5000 พร้อมเทคโนโลยี Ultra Noise-Cancelling ไมค์ตัดเสียงที่เคลียร์ที่สุด</p>
+                                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-[#0099DD] text-xs font-bold"><i data-lucide="zap" className="w-4 h-4 mr-2"></i> NEW ARRIVAL: VT5000 SERIES</div>
+                                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">เปลี่ยนเสียงรบกวน <br /><span style={{ color: primaryBlue }}>ให้เป็นความเงียบ</span></h1>
+                                <p className="text-lg text-slate-600">หูฟัง VT5000 พร้อมเทคโนโลยี Ultra Noise-Cancelling ตัดเสียงรบกวนได้ถึง 90% [cite: 13, 19]</p>
                                 <a href={lineLink} className="inline-block bg-[#0099DD] text-white px-8 py-4 rounded-xl text-lg font-bold shadow-xl">ขอรับราคาพิเศษสำหรับองค์กร</a>
                             </div>
                             <div className="relative">
-                                <img src={productImageUrl} alt="VT5000" className="w-full h-full object-contain relative z-10" />
-                                <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border flex items-center space-x-3 z-20">
-                                    <div className="bg-green-100 p-2 rounded-lg text-green-600 font-bold">90% UP</div>
-                                    <div><p className="text-xs font-bold text-slate-400 uppercase">Noise Reduction</p></div>
+                                <img src={productImageUrl} alt="VT5000" className="w-full h-auto object-contain rounded-3xl" />
+                                <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border flex items-center space-x-3">
+                                    <div className="bg-green-100 p-2 rounded-lg text-green-600"><i data-lucide="volume-x"></i></div>
+                                    <div><p className="text-xs font-bold text-slate-400">NOISE REDUCTION</p><p className="text-xl font-black">90% UP</p></div>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    {/* Footer Simplified */}
-                    <footer className="py-12 bg-slate-900 text-white text-center">
+                    {/* 3. Pain Points Section [cite: 20, 21, 22, 23] */}
+                    <section id="solution" className="py-24 bg-slate-900 text-white">
                         <div className="container mx-auto px-6">
-                            <p>© 2026 EcocomShop. All rights reserved.</p>
-                            <p className="text-sm text-slate-400 mt-2">ติดต่อเรา: {phoneNumber}</p>
+                            <div className="text-center mb-16">
+                                <h2 className="text-3xl md:text-4xl font-bold mb-4">ธุรกิจของคุณกำลังเจอปัญหาเหล่านี้อยู่หรือไม่?</h2>
+                                <p className="text-slate-400">เสียงรบกวนเพียงเล็กน้อย อาจทำให้ดีลสำคัญของคุณหลุดลอยไป [cite: 21]</p>
+                            </div>
+                            <div className="grid md:grid-cols-3 gap-8">
+                                <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 text-center">
+                                    <div className="mb-6 inline-block p-3 bg-red-500/20 rounded-xl text-red-400"><i data-lucide="message-square"></i></div>
+                                    <h3 className="text-xl font-bold mb-4">ลูกค้าฟังไม่รู้เรื่อง</h3>
+                                    <p className="text-slate-400">ลูกค้าบ่นว่าไม่ได้ยินเสียงพนักงาน เพราะเสียงรอบข้างดังเกินไป [cite: 22]</p>
+                                </div>
+                                <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 text-center">
+                                    <div className="mb-6 inline-block p-3 bg-yellow-500/20 rounded-xl text-yellow-400"><i data-lucide="users"></i></div>
+                                    <h3 className="text-xl font-bold mb-4">พนักงานเสียสมาธิ</h3>
+                                    <p className="text-slate-400">พนักงานเครียดง่าย ประสิทธิภาพลดลง เมื่อต้องสวมหูฟังทั้งวัน [cite: 22]</p>
+                                </div>
+                                <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 text-center">
+                                    <div className="mb-6 inline-block p-3 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="building-2"></i></div>
+                                    <h3 className="text-xl font-bold mb-4">ภาพลักษณ์ดูไม่โปร</h3>
+                                    <p className="text-slate-400">บริษัทดูไม่เป็นมืออาชีพ เมื่อต้องบันทึกเสียงสนทนาทุกสาย [cite: 23]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 4. Features Section [cite: 26, 27, 28, 29] */}
+                    <section className="py-24">
+                        <div className="container mx-auto px-6">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">ทำไมต้อง VT5000?</h2>
+                            <div className="grid lg:grid-cols-2 gap-16 items-center">
+                                <div className="space-y-8">
+                                    <div className="flex space-x-6">
+                                        <div className="p-3 bg-blue-50 rounded-lg h-fit"><i data-lucide="mic-off" style={{color: primaryBlue}}></i></div>
+                                        <div><h4 className="text-xl font-bold mb-2">Ultra Noise Cancelling</h4><p className="text-slate-600">ตัดเสียงรอบข้างได้ถึง 90% ให้เสียงพูดชัดใสที่สุด [cite: 27]</p></div>
+                                    </div>
+                                    <div className="flex space-x-6">
+                                        <div className="p-3 bg-blue-50 rounded-lg h-fit"><i data-lucide="shield-check" style={{color: primaryBlue}}></i></div>
+                                        <div><h4 className="text-xl font-bold mb-2">สายเสริมความแข็งแรง</h4><p className="text-slate-600">ออกแบบมาเพื่อการใช้งานหนัก 24/7 ทนทานต่อการดึงและบิดงอ [cite: 28]</p></div>
+                                    </div>
+                                    <div className="flex space-x-6">
+                                        <div className="p-3 bg-blue-50 rounded-lg h-fit"><i data-lucide="headphones" style={{color: primaryBlue}}></i></div>
+                                        <div><h4 className="text-xl font-bold mb-2">ฟองน้ำเกรดพรีเมียม</h4><p className="text-slate-600">สัมผัสนุ่มสบาย ระบายอากาศได้ดี ใส่ทำงานทั้งวันไม่เจ็บหู [cite: 29]</p></div>
+                                    </div>
+                                </div>
+                                <div className="bg-blue-50 p-12 rounded-[40px]">
+                                    <img src={productImageUrl} className="w-full h-auto object-contain drop-shadow-2xl" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 5. Reviews [cite: 41, 43, 44] */}
+                    <section id="reviews" className="py-24 bg-blue-50">
+                        <div className="container mx-auto px-6">
+                            <h2 className="text-3xl font-bold mb-12 text-center">รีวิวจากผู้ใช้งานจริง [cite: 41]</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                                {reviewImages.map(img => (
+                                    <div key={img.id} className="bg-white p-2 rounded-xl shadow-sm">
+                                        <img src={img.url} className="w-full h-48 object-cover rounded-lg" alt={img.alt} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 6. Footer [cite: 55, 56, 57] */}
+                    <footer className="py-12 bg-slate-900 text-white">
+                        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+                            <div className="mb-4 md:mb-0">
+                                <img src={logoUrl} className="h-8 brightness-0 invert" />
+                                <p className="text-xs text-slate-500 mt-2">© 2026 EcocomShop. All rights reserved. [cite: 57]</p>
+                            </div>
+                            <div className="flex space-x-6 font-bold">
+                                <a href={phoneLink}><i data-lucide="phone" className="inline w-4 h-4 mr-2"></i> {phoneNumber}</a>
+                                <a href={lineLink}>Line: @EcocomShop</a>
+                            </div>
                         </div>
                     </footer>
                 </div>
@@ -110,7 +174,5 @@
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
-    
-    <script src="https://unpkg.com/lucide@latest"></script>
 </body>
 </html>
