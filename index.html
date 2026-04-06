@@ -24,20 +24,17 @@
     <style>
         body { font-family: 'Sarabun', sans-serif; scroll-behavior: smooth; }
         .hero-gradient { background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%); }
-        /* ปรับแต่งส่วนรีวิวให้สวยงาม */
-        .review-card {
-            aspect-ratio: 1 / 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: #f8fafc;
+        
+        /* ปรับปรุงส่วนรีวิวให้ขยายใหญ่และชัดเจนขึ้น */
+        .review-card-container {
+            transition: all 0.3s ease;
         }
-        .review-card img {
+        .review-img {
             width: 100%;
-            height: 100%;
-            object-fit: contain; /* ปรับเป็น contain เพื่อให้เห็นข้อความรีวิวครบถ้วน */
-            padding: 10px;
+            height: auto;
+            min-height: 250px; /* เพิ่มความสูงขั้นต่ำ */
+            object-fit: contain;
+            background-color: #fff;
         }
     </style>
 </head>
@@ -121,21 +118,45 @@
                         <div class="flex gap-6">
                             <div class="p-4 bg-blue-50 rounded-xl text-primaryBlue h-fit"><i data-lucide="mic-off"></i></div>
                             <div>
-                                <h4 class="text-xl font-bold mb-1">Ultra Noise Cancelling</h4>
-                                <p class="text-slate-600 text-sm">เทคโนโลยีตัดเสียงรบกวนอัจฉริยะ ตัดเสียงรอบข้างได้ถึง 90%</p>
+                                <h4 class="text-xl font-bold mb-1">Microphone: Ultra Noise Cancelling</h4>
+                                <p class="text-slate-600 text-sm">เทคโนโลยีตัดเสียงรบกวนอัจฉริยะ ตัดเสียงรอบข้างได้ถึง 90% ให้เสียงพูดชัดใสที่สุด</p>
                             </div>
                         </div>
                         <div class="flex gap-6">
                             <div class="p-4 bg-blue-50 rounded-xl text-primaryBlue h-fit"><i data-lucide="shield-check"></i></div>
                             <div>
-                                <h4 class="text-xl font-bold mb-1">ความแข็งแรงทนทาน</h4>
-                                <p class="text-slate-600 text-sm">ออกแบบมาเพื่อการใช้งานหนัก 24/7 ทนทานต่อการดึงและบิดงอ</p>
+                                <h4 class="text-xl font-bold mb-1">Durability: สายเสริมความแข็งแรง</h4>
+                                <p class="text-slate-600 text-sm">ออกแบบมาเพื่อการใช้งานหนัก 24/7 ทนทานต่อการดึงและบิดงอ ไม่ขาดง่าย</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="p-4 bg-blue-50 rounded-xl text-primaryBlue h-fit"><i data-lucide="headphones"></i></div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Comfort: ฟองน้ำเกรดพรีเมียม</h4>
+                                <p class="text-slate-600 text-sm">สัมผัสนุ่มสบาย ระบายอากาศได้ดี ใส่ทำงานตลอดทั้งวันได้โดยไม่เจ็บหู</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="p-4 bg-blue-50 rounded-xl text-primaryBlue h-fit"><i data-lucide="usb"></i></div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Compatibility: Plug & Play</h4>
+                                <p class="text-slate-600 text-sm">รองรับทั้งระบบ IP Phone และคอมพิวเตอร์ เชื่อมต่อง่าย ใช้งานได้ทันทีไม่ต้องลง Driver</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="lg:w-1/2 bg-blue-50 rounded-[50px] p-8 md:p-12">
+                <div class="lg:w-1/2 bg-blue-50 rounded-[50px] p-8 md:p-12 relative">
                     <img src="https://cf.lnwfile.com/_/cf/_raw/9n/95/cb.jpg" class="w-full h-auto drop-shadow-2xl">
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="bg-white p-4 rounded-2xl shadow-sm text-center">
+                            <p class="text-2xl font-bold text-primaryBlue">24/7</p>
+                            <p class="text-xs text-slate-500 font-bold uppercase">Ready</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm text-center">
+                            <p class="text-2xl font-bold text-primaryBlue">90%</p>
+                            <p class="text-xs text-slate-500 font-bold uppercase">Mute Noise</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,7 +170,7 @@
                 <span>การันตีความพึงพอใจจากลูกค้าทั่วประเทศ</span>
             </div>
         </div>
-        <div id="review-grid" class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div id="review-grid" class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl">
             </div>
     </section>
 
@@ -167,10 +188,8 @@
     </footer>
 
     <script>
-        // เริ่มต้นไอคอน
         lucide.createIcons();
 
-        // Navbar Scroll Animation
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -182,33 +201,29 @@
             }
         });
 
-        // ข้อมูลรีวิว
         const reviews = [
-            { id: 1, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjv42X502n9MWFo-c83pocvCLzaZ5Mhd8OScgyF_E70Cg-i8HrDD9sweQmPzKwxsMS4xVn9paiG5B1NPhwiYH52Gp5DEEU63ySN-EWedVsClwJ6u5cMYcUhXwO3XcADEyozRM8EZIXXPkfujlIwqa4X_zZGYzsxMeBKs1Rfe1gAPFQrudyEw7yJEH32rPQ/s320/1.jpg' },
-            { id: 2, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdgEmUGekykOsVGIQsPck4GIPZHQuXux5m_hgI-XRWjsYiZIrvNHy3-p3lU_X-76P1PdLVkE3p_uP2hADoh6OouzvEsfPX7VE_dzqw-o7cAujaoW1sfioVuivWfIfHBFvwsraiXAEkUhMlnQFJWhxVxBvdCh9aJ9CfLw1wfaRQVEU1YmZf8X5h5E0rcOk/s320/2.jpg' },
-            { id: 3, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyEGxGVeLweJI06H-arzPZTgID-3Kp9g7di6raOikQ6avSP5PSQhA71qgNLnvUeJ73w43xJBrFxZ5POiqjzgJmvXqLv0PONwqT5_csZoLicBm4XxCGMnAV3vHi-bGvAOz7t7s9u8fZtoO381w-VVUwbD_sbuAMl6iTxnHi0EKbzvtrOUlrgqnXIobHfmg/s320/3.jpg' },
-            { id: 4, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiq46V0kONtyCpNLD7-plwktS4aKaoncWVCmSG9WWJr2NHe06W_-ZmDkSAvXzdximo4fyuH21Q5XNDSm6XhIjmdZZ6AaKik8ceVvmcqCUmncvcBnGYL3RPYf0qkOx9-iGFVA7SkOvej2TA2mvbRWVu3nv81y1Hb7Pxp3lmBqceUp2dOcpNZfh-HAT7gik/s320/4.jpg' },
-            { id: 5, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvwOu_scQ0tzvfFYZT-I8B8fAuLqyoe28KvTJQNdQS_gTjATNSJGURmP8-Tioh0deiAn5413CMGhQjsJ-ImBImruLH0ahzA4Nw9VVSVydBSGLAopt2KdMeC4rnrpgAKKdmlJeVBIaaOkEaTdP-EJfMU3cY3JxD6NqKXV9UFjH3pvo_Y8GNvDo_3tDzLO0/s320/5.jpg' }
+            { id: 1, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjv42X502n9MWFo-c83pocvCLzaZ5Mhd8OScgyF_E70Cg-i8HrDD9sweQmPzKwxsMS4xVn9paiG5B1NPhwiYH52Gp5DEEU63ySN-EWedVsClwJ6u5cMYcUhXwO3XcADEyozRM8EZIXXPkfujlIwqa4X_zZGYzsxMeBKs1Rfe1gAPFQrudyEw7yJEH32rPQ/s1600/1.jpg' },
+            { id: 2, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdgEmUGekykOsVGIQsPck4GIPZHQuXux5m_hgI-XRWjsYiZIrvNHy3-p3lU_X-76P1PdLVkE3p_uP2hADoh6OouzvEsfPX7VE_dzqw-o7cAujaoW1sfioVuivWfIfHBFvwsraiXAEkUhMlnQFJWhxVxBvdCh9aJ9CfLw1wfaRQVEU1YmZf8X5h5E0rcOk/s1600/2.jpg' },
+            { id: 3, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyEGxGVeLweJI06H-arzPZTgID-3Kp9g7di6raOikQ6avSP5PSQhA71qgNLnvUeJ73w43xJBrFxZ5POiqjzgJmvXqLv0PONwqT5_csZoLicBm4XxCGMnAV3vHi-bGvAOz7t7s9u8fZtoO381w-VVUwbD_sbuAMl6iTxnHi0EKbzvtrOUlrgqnXIobHfmg/s1600/3.jpg' },
+            { id: 4, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiq46V0kONtyCpNLD7-plwktS4aKaoncWVCmSG9WWJr2NHe06W_-ZmDkSAvXzdximo4fyuH21Q5XNDSm6XhIjmdZZ6AaKik8ceVvmcqCUmncvcBnGYL3RPYf0qkOx9-iGFVA7SkOvej2TA2mvbRWVu3nv81y1Hb7Pxp3lmBqceUp2dOcpNZfh-HAT7gik/s1600/4.jpg' },
+            { id: 5, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvwOu_scQ0tzvfFYZT-I8B8fAuLqyoe28KvTJQNdQS_gTjATNSJGURmP8-Tioh0deiAn5413CMGhQjsJ-ImBImruLH0ahzA4Nw9VVSVydBSGLAopt2KdMeC4rnrpgAKKdmlJeVBIaaOkEaTdP-EJfMU3cY3JxD6NqKXV9UFjH3pvo_Y8GNvDo_3tDzLO0/s1600/5.jpg' }
         ];
 
         const grid = document.getElementById('review-grid');
         reviews.forEach(r => {
             grid.innerHTML += `
-                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all overflow-hidden border border-slate-100 group">
-                    <div class="review-card">
-                        <img src="${r.url}" alt="รีวิวลูกค้า" loading="lazy" class="group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <div class="p-4 bg-white border-t border-slate-50 flex justify-between items-center">
+                <div class="review-card-container bg-white rounded-3xl shadow-lg overflow-hidden border border-slate-100 hover:shadow-2xl hover:-translate-y-1 transform transition">
+                    <img src="${r.url}" alt="รีวิวลูกค้า" loading="lazy" class="review-img p-6">
+                    <div class="px-8 pb-6 flex justify-between items-center bg-white">
                         <div class="flex text-yellow-400">
-                            ${Array(5).fill('<i data-lucide="star" class="w-3 h-3 fill-current"></i>').join('')}
+                            ${Array(5).fill('<i data-lucide="star" class="w-4 h-4 fill-current"></i>').join('')}
                         </div>
-                        <span class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Verified</span>
+                        <span class="text-xs font-bold text-slate-300 uppercase tracking-widest">Verified User</span>
                     </div>
                 </div>
             `;
         });
         
-        // สั่งให้ Lucide วาดไอคอนที่สร้างใหม่ใน JavaScript
         lucide.createIcons();
     </script>
 </body>
